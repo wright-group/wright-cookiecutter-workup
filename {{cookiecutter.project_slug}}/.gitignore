@@ -1,0 +1,22 @@
+# do not commit data
+*.wt5
+
+# do not commit workup
+*.png
+*.pdf
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# IDE settings
+.vscode/
+.idea/
