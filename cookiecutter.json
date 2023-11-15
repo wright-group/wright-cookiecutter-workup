@@ -1,9 +1,9 @@
 {
     "full_name": "anonymous",
-    "email": null,
-    "project_name": "Manuscript Boilerplate",
+    "email": "wright@chem.wisc.edu",
+    "project_name": "Workup Boilerplate",
     "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}",
     "project_short_description": "wright-group boilerplate for working on data and writing a manuscript.",
-    "osf_id": "",
+    "osf_id": null,
     "open_source_license": ["MIT license", "BSD license", "ISC license", "Apache Software License 2.0", "GNU General Public License v3", "Not open source"]
 }

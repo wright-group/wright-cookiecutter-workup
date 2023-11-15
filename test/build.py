@@ -4,7 +4,7 @@ import subprocess
 import platform
 
 
-osf_project = "{{ cookiecutter.osf_id }}"
+osf_project = "j5nws"
 here = pathlib.Path(__file__).resolve().parent
 
 
