@@ -27,18 +27,20 @@ def print_then_call(*args, **kwargs):
 
 def fetch_data():
     print_with_line('fetch data')
+    print_then_call("osf", "-p", osf_project, "clone", str(here / "data"))
+
     # for name in [...]:
-    #     print_then_call("osf", "-p", project, "fetch", f"{name}.wt5", str(here / "data" / f"{name}.wt5"))
+    #     print_then_call("osf", "-p", osf_project, "fetch", f"{name}.wt5", str(here / "data" / f"{name}.wt5"))
 
 
 def build_data():
     print_with_line('workup data')
-    # print_then_call(python, str(here / "data" / "compose.py"))
+    print_then_call(python, str(here / "data" / "compose.py"))
 
 
 def build_figures():
     print_with_line('figures')
-    # print_then_call(python, str(here / "figures" / 'fig1.py'))
+    print_then_call(python, str(here / "figures" / 'fig1.py'))
 
 
 if __name__ == '__main__':
