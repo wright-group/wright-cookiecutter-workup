@@ -3,15 +3,20 @@
 {{ cookiecutter.project_short_description }}
 
 ## Instructions for use
+
 1. Clone this repository and make sure you have the package requirements (see `requirements.txt`)
-2. Consult `requirements.txt` and install any needed package dependencies
+2. Create an environment with the package dependencies.  e.g. using conda:
+  ```
+  conda create -n {{ cookiecutter.project_slug }}
+  conda install --file requirements.txt
+  ```
 3. Run this script e.g. on Windows:
   ```
-  python build.py <args>
+  python build.py
   ```
-  args [optional]
-  - `fetch`: download and extract the [raw data](https://osf.io/{{ cookiecutter.osf_id }})
-  - `data`: perform all data processing and simulations
-  - `figures`: generate manuscript figures from the data
-  - if no arguments are given, build.py will perform all workflow steps (in order)
+  see `python build.py --help` for more detailed build instructions
 
+## Figures folder
+
+For examination of individual figures, each figure script has a command line interface to create/examine plots with simple options.
+Call e.g. `python fig1.py --help` for more information.

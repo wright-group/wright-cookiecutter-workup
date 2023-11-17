@@ -1,6 +1,8 @@
 # wright-cookiecutter-workup
 
-A template for data analysis.  Includes integration with Open Science Framework (OSF) storage.
+A template for data analysis.
+Includes integration with Open Science Framework (OSF) storage.
+Includes simple CLI for figure plotting (using click).
 
 
 # Usage
