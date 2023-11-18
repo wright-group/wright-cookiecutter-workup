@@ -1,8 +1,7 @@
 import pathlib
-import sys
 import subprocess
 import platform
-
+import click
 
 osf_project = "{{ cookiecutter.osf_id }}"
 here = pathlib.Path(__file__).resolve().parent
@@ -25,32 +24,39 @@ def print_then_call(*args, **kwargs):
     subprocess.run(args, check=True, **kwargs)
 
 
+@click.group()
+def main():
+    pass
+
+
+@main.command(name="all", help="build all steps")
+def all_():
+    print('building everything!')
+    fetch_data()
+    build_data()
+    build_figures()
+    print_with_line('building done!')
+
+
+@main.command(name="fetch", help="download and extract the [raw data](https://osf.io/{{ cookiecutter.osf_id }})")
 def fetch_data():
     print_with_line('fetch data')
     print_then_call("osf", "-p", osf_project, "clone", str(here / "data"))
-
     # for name in [...]:
     #     print_then_call("osf", "-p", osf_project, "fetch", f"{name}.wt5", str(here / "data" / f"{name}.wt5"))
 
 
+@main.command(name="data", help="perform all data processing and simulations")
 def build_data():
     print_with_line('workup data')
     print_then_call(python, str(here / "data" / "compose.py"))
 
 
+@main.command(name="figures", help="generate manuscript figures from the data")
 def build_figures():
     print_with_line('figures')
     print_then_call(python, str(here / "figures" / 'fig1.py'))
 
 
 if __name__ == '__main__':
-    if len(sys.argv) == 1:
-        print('no arguments given---building everything!')
-        sys.argv.append('all')
-    if 'fetch' in sys.argv or 'all' in sys.argv:
-        fetch_data()
-    if 'data' in sys.argv or 'all' in sys.argv:
-        build_data()
-    if 'figures' in sys.argv or 'all' in sys.argv:
-        build_figures()
-    print_with_line('building done!')
+    main()
