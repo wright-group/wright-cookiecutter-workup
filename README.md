@@ -2,7 +2,7 @@
 
 A [cookiecutter](https://cookiecutter.readthedocs.io/en/stable/README.html) template for data analysis. 
 Includes integration with [Open Science Framework (OSF)](https://osf.io/4znzp/) storage.
-Includes a CLI for figure plotting (using click).
+Includes a CLI for figure plotting (using [click](https://click.palletsprojects.com/en/)).
 
 # Usage
 
