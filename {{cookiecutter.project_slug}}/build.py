@@ -40,10 +40,23 @@ def all_():
 
 @main.command(name="fetch", help="download and extract the [raw data](https://osf.io/{{ cookiecutter.osf_id }})")
 def fetch_data():
+    """ download and store data files from OSF"""
     print_with_line('fetch data')
-    print_then_call("osf", "-p", osf_project, "clone", str(here / "data"))
-    # for name in [...]:
-    #     print_then_call("osf", "-p", osf_project, "fetch", f"{name}.wt5", str(here / "data" / f"{name}.wt5"))
+
+    # Approach 1: copy the entirety of the OSF repo, e.g.
+    print_then_call("osf", "-p", osf_project, "clone", "-U", str(here / "data"))
+        
+    # Approach 2: copy specific files using folder structure, e.g.
+    # for path, name in zip(paths, names):
+    #     rel = path / f"{name}.wt5"
+    #     print_then_call("osf", "-p", osf_project, "fetch", str(rel), str(here / "data" / rel"))
+
+    # Approach 3: get files on demand with urls (osfclient not needed, this command is not needed)
+    # within scripts, call `d=wt.open("https://osf.io/{file_id}/download")`
+
+    # Note:  if the OSF repository is private, you will need to supply user credentials
+    # supply a username to osf calls or set up an .osfcli.config file (`print_then_call("osf", "init")``)
+    # see osfclient documentation for details
 
 
 @main.command(name="data", help="perform all data processing and simulations")

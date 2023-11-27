@@ -10,9 +10,9 @@
   conda create -n {{ cookiecutter.project_slug }}
   conda install --file requirements.txt
   ```
-3. Run this script e.g. on Windows:
+3. Run the project build script. e.g. on Windows:
   ```
-  python build.py
+  python build.py all
   ```
   see `python build.py --help` for more detailed build instructions
 
