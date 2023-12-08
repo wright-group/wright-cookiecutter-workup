@@ -24,21 +24,6 @@ def print_then_call(*args, **kwargs):
     subprocess.run(args, check=True, **kwargs)
 
 
-@click.group()
-def main():
-    pass
-
-
-@main.command(name="all", help="build all steps")
-def all_():
-    print('building everything!')
-    fetch_data()
-    build_data()
-    build_figures()
-    print_with_line('building done!')
-
-
-@main.command(name="fetch", help="download and extract the [raw data](https://osf.io/{{ cookiecutter.osf_id }})")
 def fetch_data():
     """ download and store data files from OSF"""
     print_with_line('fetch data')
@@ -59,16 +44,43 @@ def fetch_data():
     # see osfclient documentation for details
 
 
-@main.command(name="data", help="perform all data processing and simulations")
 def build_data():
     print_with_line('workup data')
     print_then_call(python, str(here / "data" / "compose.py"))
 
 
-@main.command(name="figures", help="generate manuscript figures from the data")
 def build_figures():
     print_with_line('figures')
     print_then_call(python, str(here / "figures" / 'fig1.py'))
+
+
+@click.group()
+def cli():
+    pass
+
+
+@cli.command(name="all", help="build all steps")
+def all_():
+    print('building everything!')
+    fetch_data()
+    build_data()
+    build_figures()
+    print_with_line('building done!')
+
+
+@cli.command(name="fetch", help="download and extract the [raw data](https://osf.io/{{ cookiecutter.osf_id }})")
+def _fetch_data():
+    fetch_data()
+
+
+@cli.command(name="data", help="perform all data processing and simulations")
+def _build_data():
+    build_data()
+
+
+@cli.command(name="figures", help="generate manuscript figures from the data")
+def _build_figures():
+    build_figures()
 
 
 if __name__ == '__main__':
