@@ -1,5 +1,6 @@
 # do not commit data
 *.wt5
+data/osfstorage/*
 
 # do not commit workup
 *.png
