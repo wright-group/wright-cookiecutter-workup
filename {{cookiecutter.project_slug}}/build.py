@@ -84,4 +84,4 @@ def _build_figures():
 
 
 if __name__ == '__main__':
-    main()
+    cli()
