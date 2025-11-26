@@ -2,10 +2,16 @@ import pathlib
 import subprocess
 import platform
 import click
+import requests, zipfile, io
 
-osf_project = "{{ cookiecutter.osf_id }}"
+
+osf_project:str = "{{ cookiecutter.osf_id }}"
 here = pathlib.Path(__file__).resolve().parent
+zips:dict = ...
 
+# dict of zipped folders to unpack {osf guid: data subfolder}
+# e.g. {"jwfu8": "osfstorage",}
+zips = {}
 
 if platform.system() == 'Windows':
     python = 'python'
@@ -27,21 +33,19 @@ def print_then_call(*args, **kwargs):
 def fetch_data():
     """ download and store data files from OSF"""
     print_with_line('fetch data')
-
-    # Approach 1: copy the entirety of the OSF repo, e.g.
-    print_then_call("osf", "-p", osf_project, "clone", "-U", str(here / "data"))
-        
-    # Approach 2: copy specific files using folder structure, e.g.
-    # for path, name in zip(paths, names):
-    #     rel = path / f"{name}.wt5"
-    #     print_then_call("osf", "-p", osf_project, "fetch", str(rel), str(here / "data" / rel"))
-
-    # Approach 3: get files on demand with urls (osfclient not needed, this command is not needed)
-    # within scripts, call `d=wt.open("https://osf.io/{file_id}/download")`
-
-    # Note:  if the OSF repository is private, you will need to supply user credentials
-    # supply a username to osf calls or set up an .osfcli.config file (`print_then_call("osf", "init")``)
-    # see osfclient documentation for details
+    for guid, subfolder in zips.items():
+        print_with_line(f"downloading guid={guid}")
+        url = f"https://osf.io/download/{guid}"
+        r = requests.get(url, stream=True)
+        if r.status_code == 200:
+            path = here / "data"
+            if subfolder is not None:
+                path = path / subfolder
+            print_with_line(f"unpacking to {str(path)}")
+            z = zipfile.ZipFile(io.BytesIO(r.content))
+            z.extractall(path)
+        else:
+            print("Error downloading file:", r.status_code)
 
 
 def build_data():
