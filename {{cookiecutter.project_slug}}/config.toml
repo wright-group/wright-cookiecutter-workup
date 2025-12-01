@@ -1,0 +1,2 @@
+[osf]
+id = "{{ cookiecutter.osf_id }}"
