@@ -3,10 +3,12 @@ import subprocess
 import platform
 import click
 import requests, zipfile, io
+import tomllib
 
 
-osf_project:str = "{{ cookiecutter.osf_id }}"
 here = pathlib.Path(__file__).resolve().parent
+config  = tomllib.load((here / "config.toml").open())
+osf_project:str = config["osf"]["id"]
 zips:dict = ...
 
 # dict of zipped folders to unpack {osf guid: data subfolder}
